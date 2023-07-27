@@ -23,3 +23,20 @@ export const fetchDishes = createAsyncThunk<IDish[], undefined, {dispatch: AppDi
         return newDishes;
     }
 );
+
+interface updateDishParams {
+    id: string;
+    dish: TApiDish;
+}
+export const updateDish = createAsyncThunk<void, updateDishParams >(
+    'dishes/update',
+    async (params) => {
+        await axiosApi.put(`/dishes${params.id}.json`, params.dish);
+    }
+)
+export const deleteDish = createAsyncThunk (
+    'dishes/delete',
+    async (id: string) => {
+        await axiosApi.delete('/dishes/' + id + '.json');
+    },
+);
