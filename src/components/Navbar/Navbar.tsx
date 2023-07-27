@@ -16,7 +16,7 @@ const Navbar = () => {
         titleText = titleText.concat(' Admin');
     }
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', mb: 12 }}>
             <CssBaseline />
             <AppBar component="nav">
                 <Toolbar>
@@ -30,8 +30,10 @@ const Navbar = () => {
                     </IconButton>
                     <Typography
                         variant="h6"
-                        component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                        component={NavLink}
+                        to='/'
+                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }}}
+                        style={{ color: '#fff' }}
                     >
                         {titleText}
                     </Typography>
@@ -39,7 +41,7 @@ const Navbar = () => {
                         <Button component={NavLink} to='/dishes' style={{ color: '#fff' }}>
                             Dishes
                         </Button>
-                        <Button  component={NavLink} to='/orders' style={{ color: '#fff' }}>
+                        <Button  component={NavLink} to='/' style={{ color: '#fff' }}>
                             Orders
                         </Button>
                     </Box>
