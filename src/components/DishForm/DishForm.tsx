@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {IDishMutation, TApiDish} from "../../types";
 import {Button} from "react-bootstrap";
-import ButtonSpinner from "../../UI/ButtonSpinner/ButtonSpinner";
+import ButtonSpinner from "../../UI/Spinner/ButtonSpinner";
 
 
 interface Props {
