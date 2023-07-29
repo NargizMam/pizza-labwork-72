@@ -37,14 +37,16 @@ const Navbar = () => {
                     >
                         {titleText}
                     </Typography>
-                    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                        <Button component={NavLink} to='/dishes' style={{ color: '#fff' }}>
-                            Dishes
-                        </Button>
-                        <Button  component={NavLink} to='/' style={{ color: '#fff' }}>
-                            Orders
-                        </Button>
-                    </Box>
+                    {location.pathname === '/admin' &&
+                        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                            <Button component={NavLink} to='/admin/dishes' style={{ color: '#fff' }}>
+                                Dishes
+                            </Button>
+                            <Button  component={NavLink} to='/admin/orders' style={{ color: '#fff' }}>
+                                Orders
+                            </Button>
+                        </Box>
+                    }
                 </Toolbar>
             </AppBar>
         </Box>

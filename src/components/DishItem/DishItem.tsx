@@ -9,11 +9,13 @@ import {NavLink} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../app/hook";
 import {deleteDish, fetchDishes} from "../../features/Dishes/DishesThunk";
 import {selectDeleteDishLoading} from "../../features/Dishes/DishesSlice";
+import {addDish, getTotalPrice} from "../../features/Orders/OrdersSlice";
 
 interface Props {
     dish: IDish;
+    isAdmin: boolean,
 }
-const DishItem: React.FC<Props> = ({dish}) => {
+const DishItem: React.FC<Props> = ({dish, isAdmin}) => {
     const dispatch = useAppDispatch();
     const deleteLoading = useAppSelector(selectDeleteDishLoading);
 
@@ -25,8 +27,15 @@ const DishItem: React.FC<Props> = ({dish}) => {
       await dispatch(fetchDishes());
 
     }
+    const getOrder = async () => {
+        await dispatch(addDish(dish.id));
+        await dispatch(getTotalPrice(dish.price));
+    }
     return (
-        <Card sx={{ display: 'flex' , m: 2, width: 700 ,height: 100, justifyContent: 'space-between'}}>
+        <Card
+            sx={{ display: 'flex' , m: 2, width: 700 ,height: 100, justifyContent: 'space-between'}}
+            onClick={getOrder}
+        >
             <CardMedia
                 component="img"
                 sx={{ width: 150 }}
@@ -41,19 +50,21 @@ const DishItem: React.FC<Props> = ({dish}) => {
                     {dish.price} KGS
                 </Typography>
             </Container>
-            <CardActions>
-                <Button color="info" variant="outlined" component={NavLink}
-                        to={'/edit-dish/' + dish.id}
-                >
-                    <Edit/>
-                    Edit</Button>
-                <Button color="warning" variant="outlined"
-                        onClick={onDelete}
-                        disabled={deleteLoading ? deleteLoading === dish.id : false}
-                >
-                    <Delete/>
-                    Delete</Button>
-            </CardActions>
+            {isAdmin &&
+                <CardActions>
+                    <Button color="info" variant="outlined" component={NavLink}
+                            to={'/edit-dish/' + dish.id}
+                    >
+                        <Edit/>
+                        Edit</Button>
+                    <Button color="warning" variant="outlined"
+                            onClick={onDelete}
+                            disabled={deleteLoading ? deleteLoading === dish.id : false}
+                    >
+                        <Delete/>
+                        Delete</Button>
+                </CardActions>
+            }
         </Card>
     );
 }

@@ -12,7 +12,6 @@ const NewDish = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const creating = useAppSelector(selectCreateDishLoading);
-    console.log(creating);
 
     const onCreate = async (dish: TApiDish) => {
         await dispatch(createDish(dish));

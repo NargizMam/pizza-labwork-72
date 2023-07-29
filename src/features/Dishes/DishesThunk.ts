@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axiosApi from "../../axiosApi";
-import {IDish, IDishesList, TApiDish} from "../../types";
+import {IDish, IDishesList, IDishMutation, TApiDish} from "../../types";
 import {AppDispatch} from "../../app/store";
 
 export const createDish = createAsyncThunk<void, TApiDish>(
@@ -23,7 +23,20 @@ export const fetchDishes = createAsyncThunk<IDish[], undefined, {dispatch: AppDi
         return newDishes;
     }
 );
-
+export const fetchOneDish = createAsyncThunk<IDishMutation, string>(
+    'fetch/fetchOne',
+    async (id) => {
+        const response = await axiosApi<TApiDish | null>('/dishes/' + id + '.json');
+        const dish = response.data;
+        if(dish === null){
+            throw new Error('Not found!')
+        }
+        return {
+            ...dish,
+            price: String(dish.price)
+        }
+    }
+);
 interface updateDishParams {
     id: string;
     dish: TApiDish;
